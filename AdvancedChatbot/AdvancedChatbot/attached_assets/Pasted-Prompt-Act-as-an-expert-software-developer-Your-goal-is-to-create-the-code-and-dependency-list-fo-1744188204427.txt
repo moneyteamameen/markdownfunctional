@@ -1,0 +1,43 @@
+Prompt:
+Act as an expert software developer. Your goal is to create the code and dependency list for a simple web API using Python and FastAPI. This API will have one primary function: to receive an uploaded file, convert it to Markdown using the microsoft-markitdown library, and return the Markdown text.
+Instructions for the AI Agent:
+Generate Python Code (main.py):
+Write a Python script named main.py.
+Use the FastAPI library to create the web application.
+Import necessary modules: FastAPI, File, UploadFile, HTTPException, status from fastapi; io and os from Python standard library; MarkItDown, StreamInfo, UnsupportedFormatException, FileConversionException from markitdown; uvicorn for the runner.
+Initialize a global MarkItDown() instance. Include basic logging to confirm initialization or report errors.
+Define a POST endpoint at the path /convert.
+This endpoint must accept a file upload named file (using UploadFile).
+Inside the endpoint function:
+Log receipt of the file (filename, content type).
+Read the uploaded file's content asynchronously (await file.read()).
+Create an io.BytesIO object from the file content.
+Extract the filename, determine the file extension, and get the content type (mimetype).
+Create a markitdown.StreamInfo object using these details.
+Call the global MarkItDown instance's .convert_stream() method with the BytesIO stream and the StreamInfo.
+Implement try...except blocks to catch:
+UnsupportedFormatException: Raise HTTPException status 415 with detail.
+FileConversionException: Raise HTTPException status 500 with detail.
+General Exception: Raise HTTPException status 500 with detail.
+Use a finally block to ensure await file.close() is called.
+If successful, return a JSON response: {"filename": "original_filename.ext", "markdown": "converted_markdown_content"} with status 200.
+Define a GET endpoint at /health. It should return JSON {"status": "ok"} with status 200.
+Include an if __name__ == "__main__": block that uses uvicorn.run() to start the server (host="0.0.0.0", port=8000) for local testing.
+Generate Dependency List (requirements.txt):
+Provide the exact content for a requirements.txt file.
+Include these packages with compatible version specifiers (use >= and <):
+fastapi
+uvicorn[standard] (the [standard] part is important)
+markitdown[all] (the [all] part is crucial)
+python-multipart
+Output Format:
+Clearly separate the generated code for main.py and the content for requirements.txt. Use code blocks for each.
+# main.py
+# [Your generated Python code here]
+Use code with caution.
+Python
+# requirements.txt
+# [Your generated requirements list here]
+Use code with caution.
+Text
+Ensure the generated code includes basic logging for incoming requests and errors, and follows standard Python and FastAPI practices.
